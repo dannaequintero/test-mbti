@@ -3,12 +3,32 @@ import streamlit as st
 st.title("🧠 Test de Personalidad MBTI")
 st.write("Responde las siguientes preguntas:")
 
+# 👑 Celebridades por tipo (DEBE ir arriba)
+celebridades = {
+    "INTJ": ["Elon Musk", "Mark Zuckerberg", "Isaac Newton"],
+    "ENTP": ["Tom Hanks", "Robert Downey Jr.", "Sacha Baron Cohen"],
+    "INFP": ["Johnny Depp", "Tim Burton", "J.K. Rowling"],
+    "ENFP": ["Will Smith", "Robin Williams", "Ellen DeGeneres"],
+    "INFJ": ["Martin Luther King Jr.", "Lady Gaga", "Nelson Mandela"],
+    "ENFJ": ["Oprah Winfrey", "Barack Obama", "Jennifer Lawrence"],
+    "ISTJ": ["Jeff Bezos", "Natalie Portman", "George Washington"],
+    "ESTJ": ["Emma Watson", "Hillary Clinton", "Judge Judy"],
+    "ISFJ": ["Beyoncé", "Kate Middleton", "Mother Teresa"],
+    "ESFJ": ["Taylor Swift", "Bill Clinton", "Steve Harvey"],
+    "ISTP": ["Bruce Lee", "Michael Jordan", "Clint Eastwood"],
+    "ESTP": ["Ernest Hemingway", "Madonna", "Donald Trump"],
+    "ISFP": ["Michael Jackson", "Frida Kahlo", "Prince"],
+    "ESFP": ["Marilyn Monroe", "Jamie Foxx", "Adele"],
+    "INTP": ["Albert Einstein", "Bill Gates", "Marie Curie"],
+    "ENTJ": ["Steve Jobs", "Gordon Ramsay", "Margaret Thatcher"]
+}
+
 # Variables
 I = E = N = S = T = F = J = P = 0
 
 # 👥 I vs E
 q1 = st.radio("1. ¿Prefieres pasar tiempo?", ["Solo", "Con otras personas"])
-q2 = st.radio("2. Después de socializar mucho te sientes:", ["Cansado", "Con energía"])
+q2 = st.radio("2. Después de socializar te sientes:", ["Cansado", "Con energía"])
 q3 = st.radio("3. En una fiesta eres:", ["Reservado", "Sociable"])
 q4 = st.radio("4. Prefieres trabajar:", ["Solo", "En equipo"])
 
@@ -30,7 +50,8 @@ q14 = st.radio("14. Tu estilo es:", ["Organizado", "Flexible"])
 q15 = st.radio("15. Trabajas mejor:", ["Con estructura", "Sin reglas"])
 q16 = st.radio("16. Prefieres terminar:", ["Antes", "Al último momento"])
 
-# Lógica de puntaje
+# 🧠 Lógica de puntuación
+
 # I vs E
 if q1 == "Solo": I += 1
 else: E += 1
@@ -83,7 +104,7 @@ else: P += 1
 if q16 == "Antes": J += 1
 else: P += 1
 
-# Resultado
+# 🎯 Resultado
 if st.button("Ver resultado"):
     resultado = ""
 
@@ -93,26 +114,11 @@ if st.button("Ver resultado"):
     resultado += "J" if J >= P else "P"
 
     st.success(f"Tu tipo de personalidad es: {resultado}")
-if resultado in celebridades:
-    st.subheader("✨ Celebridades con tu mismo tipo:")
-    for persona in celebridades[resultado]:
-        st.write(f"- {persona}") 
+
+    # ✨ Celebridades
+    if resultado in celebridades:
+        st.subheader("✨ Celebridades con tu mismo tipo:")
+        for persona in celebridades[resultado]:
+            st.write(f"- {persona}")
+
     st.write("Este resultado está basado en el modelo MBTI analizado previamente.")
-celebridades = {
-    "INTJ": ["Elon Musk", "Mark Zuckerberg", "Isaac Newton"],
-    "ENTP": ["Tom Hanks", "Robert Downey Jr.", "Sacha Baron Cohen"],
-    "INFP": ["Johnny Depp", "Tim Burton", "J.K. Rowling"],
-    "ENFP": ["Will Smith", "Robin Williams", "Ellen DeGeneres"],
-    "INFJ": ["Martin Luther King Jr.", "Lady Gaga", "Nelson Mandela"],
-    "ENFJ": ["Oprah Winfrey", "Barack Obama", "Jennifer Lawrence"],
-    "ISTJ": ["Jeff Bezos", "Natalie Portman", "George Washington"],
-    "ESTJ": ["Emma Watson", "Hillary Clinton", "Judge Judy"],
-    "ISFJ": ["Beyoncé", "Kate Middleton", "Mother Teresa"],
-    "ESFJ": ["Taylor Swift", "Bill Clinton", "Steve Harvey"],
-    "ISTP": ["Bruce Lee", "Michael Jordan", "Clint Eastwood"],
-    "ESTP": ["Ernest Hemingway", "Madonna", "Donald Trump"],
-    "ISFP": ["Michael Jackson", "Frida Kahlo", "Prince"],
-    "ESFP": ["Marilyn Monroe", "Jamie Foxx", "Adele"],
-    "INTP": ["Albert Einstein", "Bill Gates", "Marie Curie"],
-    "ENTJ": ["Steve Jobs", "Gordon Ramsay", "Margaret Thatcher"]
-}
