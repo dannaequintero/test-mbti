@@ -2,56 +2,55 @@ import streamlit as st
 
 st.set_page_config(page_title="MBTI Test", page_icon="🧠", layout="centered")
 
-# 🌌 Fondo + estilo PRO
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-        color: white;
-    }
-
-    h1, h2, h3, p {
-        color: white !important;
-    }
-
-    .card {
-        background-color: rgba(255,255,255,0.08);
-        padding: 15px;
-        border-radius: 15px;
-        margin-bottom: 10px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # 🎨 Título
 st.markdown(
-    "<h1 style='text-align: center;'>🧠 Test de Personalidad MBTI</h1>",
+    "<h1 style='text-align: center; color: #6C63FF;'>🧠 Test de Personalidad MBTI</h1>",
     unsafe_allow_html=True
 )
 
-st.write("Descubre tu tipo de personalidad y celebridades similares ✨")
+st.markdown(
+    "<p style='text-align: center;'>Descubre tu personalidad y conoce celebridades similares ✨</p>",
+    unsafe_allow_html=True
+)
 
-# 👑 Celebridades con imágenes
+# 👑 Celebridades
 celebridades = {
-    "INTJ": [
-        {"nombre": "Elon Musk", "img": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Elon_Musk_Royal_Society_%28crop1%29.jpg"},
-        {"nombre": "Mark Zuckerberg", "img": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Mark_Zuckerberg_F8_2019_Keynote_%28cropped%29.jpg"},
-        {"nombre": "Isaac Newton", "img": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Sir_Isaac_Newton_%281643-1727%29.jpg"}
-    ],
-    "ENTP": [
-        {"nombre": "Robert Downey Jr.", "img": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Robert_Downey_Jr_2014_Comic_Con.jpg"},
-        {"nombre": "Tom Hanks", "img": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Tom_Hanks_TIFF_2019.jpg"},
-        {"nombre": "Sacha Baron Cohen", "img": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Sacha_Baron_Cohen_2019.jpg"}
-    ]
+    "INTJ": ["Elon Musk", "Mark Zuckerberg", "Isaac Newton"],
+    "ENTP": ["Tom Hanks", "Robert Downey Jr.", "Sacha Baron Cohen"],
+    "INFP": ["Johnny Depp", "Tim Burton", "J.K. Rowling"],
+    "ENFP": ["Will Smith", "Robin Williams", "Ellen DeGeneres"],
+    "INFJ": ["Martin Luther King Jr.", "Lady Gaga", "Nelson Mandela"],
+    "ENFJ": ["Oprah Winfrey", "Barack Obama", "Jennifer Lawrence"],
+    "ISTJ": ["Jeff Bezos", "Natalie Portman", "George Washington"],
+    "ESTJ": ["Emma Watson", "Hillary Clinton", "Judge Judy"],
+    "ISFJ": ["Beyoncé", "Kate Middleton", "Mother Teresa"],
+    "ESFJ": ["Taylor Swift", "Bill Clinton", "Steve Harvey"],
+    "ISTP": ["Bruce Lee", "Michael Jordan", "Clint Eastwood"],
+    "ESTP": ["Ernest Hemingway", "Madonna", "Donald Trump"],
+    "ISFP": ["Michael Jackson", "Frida Kahlo", "Prince"],
+    "ESFP": ["Marilyn Monroe", "Adele", "Jamie Foxx"],
+    "INTP": ["Albert Einstein", "Bill Gates", "Marie Curie"],
+    "ENTJ": ["Steve Jobs", "Gordon Ramsay", "Margaret Thatcher"]
 }
 
-# 🧠 Descripciones
+# 🧠 Descripciones psicográficas
 descripciones = {
-    "INTJ": "Personas estratégicas, independientes y analíticas. Les gusta planear a largo plazo.",
-    "ENTP": "Creativos, curiosos y debatidores naturales. Aman explorar ideas nuevas."
+    "INTJ": "Personas estratégicas, independientes y muy analíticas. Les gusta planear a largo plazo.",
+    "ENTP": "Creativos, curiosos y debatidores naturales. Aman explorar ideas nuevas.",
+    "INFP": "Idealistas, sensibles y guiados por valores personales profundos.",
+    "ENFP": "Entusiastas, sociales y llenos de energía creativa.",
+    "INFJ": "Empáticos, intuitivos y con fuerte visión del futuro.",
+    "ENFJ": "Líderes naturales, empáticos y orientados a ayudar a otros.",
+    "ISTJ": "Responsables, organizados y muy confiables.",
+    "ESTJ": "Prácticos, directos y excelentes organizadores.",
+    "ISFJ": "Protectores, leales y detallistas.",
+    "ESFJ": "Amables, sociales y enfocados en la armonía.",
+    "ISTP": "Prácticos, observadores y resolutivos.",
+    "ESTP": "Energéticos, espontáneos y orientados a la acción.",
+    "ISFP": "Artísticos, sensibles y tranquilos.",
+    "ESFP": "Extrovertidos, divertidos y expresivos.",
+    "INTP": "Analíticos, lógicos y amantes del conocimiento.",
+    "ENTJ": "Líderes natos, estratégicos y decididos."
 }
 
 # Variables
@@ -83,12 +82,13 @@ q14 = st.radio("14. Tu estilo es:", ["Organizado", "Flexible"])
 q15 = st.radio("15. Trabajas mejor:", ["Con estructura", "Sin reglas"])
 q16 = st.radio("16. Prefieres terminar:", ["Antes", "Al último momento"])
 
-# 🎯 Resultado
+# 🎯 Botón resultado
 if st.button("✨ Ver resultado"):
 
+    # reset
     I = E = N = S = T = F = J = P = 0
 
-    # lógica
+    # I vs E
     if q1 == "Solo": I += 1
     else: E += 1
 
@@ -101,6 +101,7 @@ if st.button("✨ Ver resultado"):
     if q4 == "Solo": I += 1
     else: E += 1
 
+    # S vs N
     if q5 == "Hechos concretos": S += 1
     else: N += 1
 
@@ -113,6 +114,7 @@ if st.button("✨ Ver resultado"):
     if q8 == "Experiencia": S += 1
     else: N += 1
 
+    # T vs F
     if q9 == "Lógica": T += 1
     else: F += 1
 
@@ -125,6 +127,7 @@ if st.button("✨ Ver resultado"):
     if q12 == "Analizas": T += 1
     else: F += 1
 
+    # J vs P
     if q13 == "Planificar": J += 1
     else: P += 1
 
@@ -144,33 +147,16 @@ if st.button("✨ Ver resultado"):
     resultado += "T" if T >= F else "F"
     resultado += "J" if J >= P else "P"
 
-    # tarjeta resultado
-    st.markdown(
-        f"""
-        <div class='card'>
-            <h2>🧠 Tu tipo de personalidad es: {resultado}</h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.success(f"🧠 Tu tipo de personalidad es: **{resultado}**")
 
     # descripción
-    if resultado in descripciones:
-        st.markdown("### 🧠 Descripción psicográfica:")
-        st.write(descripciones[resultado])
+    st.markdown("### 🧠 Descripción psicográfica:")
+    st.write(descripciones[resultado])
 
     # celebridades
-    if resultado in celebridades:
-        st.markdown("### ✨ Celebridades con tu tipo:")
-
-        cols = st.columns(3)
-
-        for i, persona in enumerate(celebridades[resultado]):
-            with cols[i % 3]:
-                st.markdown("<div class='card'>", unsafe_allow_html=True)
-                st.image(persona["img"], use_container_width=True)
-                st.markdown(f"**{persona['nombre']}**")
-                st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("### ✨ Celebridades con tu tipo:")
+    for persona in celebridades[resultado]:
+        st.write(f"- {persona}")
 
     st.markdown("---")
     st.info("Basado en análisis de datos del modelo MBTI.")
