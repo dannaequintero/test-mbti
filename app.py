@@ -93,12 +93,10 @@ if st.button("Ver resultado"):
     resultado += "J" if J >= P else "P"
 
     st.success(f"Tu tipo de personalidad es: {resultado}")
-    
 if resultado in celebridades:
     st.subheader("✨ Celebridades con tu mismo tipo:")
     for persona in celebridades[resultado]:
-        st.write(f"- {persona}")
-        
+        st.write(f"- {persona}") 
     st.write("Este resultado está basado en el modelo MBTI analizado previamente.")
 celebridades = {
     "INTJ": ["Elon Musk", "Mark Zuckerberg", "Isaac Newton"],
