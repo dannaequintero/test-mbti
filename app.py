@@ -1,38 +1,87 @@
 import streamlit as st
 
 st.title("🧠 Test de Personalidad MBTI")
-
-st.write("Responde las siguientes preguntas para descubrir tu tipo de personalidad")
+st.write("Responde las siguientes preguntas:")
 
 # Variables
 I = E = N = S = T = F = J = P = 0
 
-# Preguntas
+# 👥 I vs E
 q1 = st.radio("1. ¿Prefieres pasar tiempo?", ["Solo", "Con otras personas"])
-q2 = st.radio("2. ¿Confías más en?", ["Hechos y detalles", "Ideas y posibilidades"])
-q3 = st.radio("3. ¿Tomas decisiones con?", ["Lógica", "Emociones"])
-q4 = st.radio("4. ¿Te organizas de forma?", ["Planificada", "Flexible"])
+q2 = st.radio("2. Después de socializar mucho te sientes:", ["Cansado", "Con energía"])
+q3 = st.radio("3. En una fiesta eres:", ["Reservado", "Sociable"])
+q4 = st.radio("4. Prefieres trabajar:", ["Solo", "En equipo"])
 
-# Sumar puntos
-if q1 == "Solo":
-    I += 1
-else:
-    E += 1
+# 🧠 S vs N
+q5 = st.radio("5. Prefieres:", ["Hechos concretos", "Ideas abstractas"])
+q6 = st.radio("6. Te enfocas más en:", ["El presente", "El futuro"])
+q7 = st.radio("7. Te gustan más:", ["Instrucciones claras", "Conceptos generales"])
+q8 = st.radio("8. Confías más en:", ["Experiencia", "Intuición"])
 
-if q2 == "Hechos y detalles":
-    S += 1
-else:
-    N += 1
+# ⚖️ T vs F
+q9 = st.radio("9. Tomas decisiones con:", ["Lógica", "Emociones"])
+q10 = st.radio("10. Valoras más:", ["Justicia", "Empatía"])
+q11 = st.radio("11. Eres más:", ["Objetivo", "Comprensivo"])
+q12 = st.radio("12. En un conflicto:", ["Analizas", "Sientes"])
 
-if q3 == "Lógica":
-    T += 1
-else:
-    F += 1
+# 📅 J vs P
+q13 = st.radio("13. Prefieres:", ["Planificar", "Improvisar"])
+q14 = st.radio("14. Tu estilo es:", ["Organizado", "Flexible"])
+q15 = st.radio("15. Trabajas mejor:", ["Con estructura", "Sin reglas"])
+q16 = st.radio("16. Prefieres terminar:", ["Antes", "Al último momento"])
 
-if q4 == "Planificada":
-    J += 1
-else:
-    P += 1
+# Lógica de puntaje
+# I vs E
+if q1 == "Solo": I += 1
+else: E += 1
+
+if q2 == "Cansado": I += 1
+else: E += 1
+
+if q3 == "Reservado": I += 1
+else: E += 1
+
+if q4 == "Solo": I += 1
+else: E += 1
+
+# S vs N
+if q5 == "Hechos concretos": S += 1
+else: N += 1
+
+if q6 == "El presente": S += 1
+else: N += 1
+
+if q7 == "Instrucciones claras": S += 1
+else: N += 1
+
+if q8 == "Experiencia": S += 1
+else: N += 1
+
+# T vs F
+if q9 == "Lógica": T += 1
+else: F += 1
+
+if q10 == "Justicia": T += 1
+else: F += 1
+
+if q11 == "Objetivo": T += 1
+else: F += 1
+
+if q12 == "Analizas": T += 1
+else: F += 1
+
+# J vs P
+if q13 == "Planificar": J += 1
+else: P += 1
+
+if q14 == "Organizado": J += 1
+else: P += 1
+
+if q15 == "Con estructura": J += 1
+else: P += 1
+
+if q16 == "Antes": J += 1
+else: P += 1
 
 # Resultado
 if st.button("Ver resultado"):
