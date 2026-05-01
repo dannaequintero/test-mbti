@@ -93,5 +93,28 @@ if st.button("Ver resultado"):
     resultado += "J" if J >= P else "P"
 
     st.success(f"Tu tipo de personalidad es: {resultado}")
-
+    
+if resultado in celebridades:
+    st.subheader("✨ Celebridades con tu mismo tipo:")
+    for persona in celebridades[resultado]:
+        st.write(f"- {persona}")
+        
     st.write("Este resultado está basado en el modelo MBTI analizado previamente.")
+celebridades = {
+    "INTJ": ["Elon Musk", "Mark Zuckerberg", "Isaac Newton"],
+    "ENTP": ["Tom Hanks", "Robert Downey Jr.", "Sacha Baron Cohen"],
+    "INFP": ["Johnny Depp", "Tim Burton", "J.K. Rowling"],
+    "ENFP": ["Will Smith", "Robin Williams", "Ellen DeGeneres"],
+    "INFJ": ["Martin Luther King Jr.", "Lady Gaga", "Nelson Mandela"],
+    "ENFJ": ["Oprah Winfrey", "Barack Obama", "Jennifer Lawrence"],
+    "ISTJ": ["Jeff Bezos", "Natalie Portman", "George Washington"],
+    "ESTJ": ["Emma Watson", "Hillary Clinton", "Judge Judy"],
+    "ISFJ": ["Beyoncé", "Kate Middleton", "Mother Teresa"],
+    "ESFJ": ["Taylor Swift", "Bill Clinton", "Steve Harvey"],
+    "ISTP": ["Bruce Lee", "Michael Jordan", "Clint Eastwood"],
+    "ESTP": ["Ernest Hemingway", "Madonna", "Donald Trump"],
+    "ISFP": ["Michael Jackson", "Frida Kahlo", "Prince"],
+    "ESFP": ["Marilyn Monroe", "Jamie Foxx", "Adele"],
+    "INTP": ["Albert Einstein", "Bill Gates", "Marie Curie"],
+    "ENTJ": ["Steve Jobs", "Gordon Ramsay", "Margaret Thatcher"]
+}
