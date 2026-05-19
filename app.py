@@ -142,6 +142,32 @@ if st.button("Ver resultado"):
     st.success(f"Tu tipo MBTI es: {resultado_mbti}")
 
     # -------------------------------------------------
+# DESCRIPCIÓN DE PERSONALIDAD
+# -------------------------------------------------
+
+descripciones = {
+    "INTJ": "Personas estratégicas, analíticas y muy independientes.",
+    "INTP": "Lógicos, curiosos y amantes del conocimiento.",
+    "ENTJ": "Líderes naturales, organizados y decididos.",
+    "ENTP": "Creativos, debatientes y muy innovadores.",
+    "INFJ": "Empáticos, profundos y visionarios.",
+    "INFP": "Idealistas, sensibles y guiados por valores.",
+    "ENFJ": "Líderes sociales, empáticos y motivadores.",
+    "ENFP": "Entusiastas, creativos y sociables.",
+    "ISTJ": "Responsables, estructurados y confiables.",
+    "ISFJ": "Protectores, leales y detallistas.",
+    "ESTJ": "Prácticos, directos y organizados.",
+    "ESFJ": "Sociales, amables y cooperativos.",
+    "ISTP": "Observadores, prácticos y resolutivos.",
+    "ISFP": "Artísticos, tranquilos y sensibles.",
+    "ESTP": "Energéticos, espontáneos y arriesgados.",
+    "ESFP": "Extrovertidos, divertidos y expresivos."
+}
+
+st.subheader("Tu personalidad")
+st.write(descripciones.get(resultado_mbti, "Perfil no encontrado"))
+    
+    # -------------------------------------------------
     # SIMILITUD
     # -------------------------------------------------
 
