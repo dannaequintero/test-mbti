@@ -8,18 +8,18 @@ import numpy as np
 
 st.set_page_config(
     page_title="Test de Compatibilidad de Personalidad",
+    page_icon="🧠",
     layout="centered"
 )
 
 st.title("Test de Compatibilidad de Personalidad")
-
-st.write("Responde las preguntas para obtener tu tipo MBTI y compatibilidad.")
+st.write("Responde las preguntas y descubre tu tipo MBTI y compatibilidad.")
 
 # -------------------------------------------------
-# CARGAR CSV
+# CARGAR CSV (IMPORTANTE)
 # -------------------------------------------------
 
-df = pd.read_csv("mbti_celebrities.csv")
+df = pd.read_csv("celebridades_mbti.csv")
 
 # -------------------------------------------------
 # MAPEO MBTI → VECTORES
@@ -54,30 +54,30 @@ def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 # -------------------------------------------------
-# PREGUNTAS (BÁSICAS)
+# PREGUNTAS
 # -------------------------------------------------
 
-q1 = st.radio("¿Prefieres estar solo o con gente?", ["Solo", "Con gente"])
-q2 = st.radio("¿Te consideras más lógico o emocional?", ["Lógico", "Emocional"])
-q3 = st.radio("¿Planificado o espontáneo?", ["Planificado", "Espontáneo"])
-q4 = st.radio("¿Te enfocas en ideas o hechos?", ["Ideas", "Hechos"])
-q5 = st.radio("¿Eres más reservado o sociable?", ["Reservado", "Sociable"])
+st.subheader("Cuestionario")
+
+q1 = st.radio("1. ¿Prefieres estar solo o con gente?", ["Solo", "Con gente"])
+q2 = st.radio("2. Decides con:", ["Lógica", "Emoción"])
+q3 = st.radio("3. Tu estilo es:", ["Planificado", "Espontáneo"])
+q4 = st.radio("4. Prefieres:", ["Ideas", "Hechos"])
+q5 = st.radio("5. Eres más:", ["Reservado", "Sociable"])
 
 # -------------------------------------------------
-# BOTÓN
+# BOTÓN RESULTADO
 # -------------------------------------------------
 
 if st.button("Ver resultado"):
 
-    # -------------------------------------------------
-    # CALCULAR MBTI (SIMPLE)
-    # -------------------------------------------------
+    # ---------------- MBTI ----------------
 
     I = 1 if q1 == "Solo" else 0
     E = 1 if q1 == "Con gente" else 0
 
-    T = 1 if q2 == "Lógico" else 0
-    F = 1 if q2 == "Emocional" else 0
+    T = 1 if q2 == "Lógica" else 0
+    F = 1 if q2 == "Emoción" else 0
 
     J = 1 if q3 == "Planificado" else 0
     P = 1 if q3 == "Espontáneo" else 0
@@ -93,23 +93,17 @@ if st.button("Ver resultado"):
 
     st.success(f"Tu tipo MBTI es: {resultado_mbti}")
 
-    # -------------------------------------------------
-    # VECTOR DEL USUARIO
-    # -------------------------------------------------
+    # ---------------- VECTOR USUARIO ----------------
 
     usuario_vec = mbti_to_vec.get(resultado_mbti, [0,0,0,0])
 
-    # -------------------------------------------------
-    # VECTORES EN DATASET
-    # -------------------------------------------------
+    # ---------------- VECTOR DATASET ----------------
 
     df["vector"] = df["mbti"].apply(
         lambda x: mbti_to_vec.get(x, [0,0,0,0])
     )
 
-    # -------------------------------------------------
-    # SIMILITUD
-    # -------------------------------------------------
+    # ---------------- SIMILITUD ----------------
 
     df["compatibilidad"] = df["vector"].apply(
         lambda v: cosine_similarity(usuario_vec, v)
@@ -117,9 +111,7 @@ if st.button("Ver resultado"):
 
     df["compatibilidad"] = df["compatibilidad"] * 100
 
-    # -------------------------------------------------
-    # TOP 5
-    # -------------------------------------------------
+    # ---------------- RESULTADOS TOP ----------------
 
     st.subheader("Top celebridades compatibles")
 
@@ -127,3 +119,8 @@ if st.button("Ver resultado"):
 
     for _, row in top.iterrows():
         st.write(f"⭐ {row['nombre']} - {row['compatibilidad']:.1f}%")
+
+    # ---------------- EXTRA INFO ----------------
+
+    st.markdown("---")
+    st.info("Sistema basado en similitud vectorial de personalidad MBTI.")
