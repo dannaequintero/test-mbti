@@ -18,18 +18,28 @@ st.markdown("""
 
 .stApp {
     background-color: #f5f5f5;
+    color: #222222;
 }
 
-h1, h2, h3 {
+html, body, [class*="css"] {
     color: #222222;
+}
+
+h1, h2, h3, h4, h5, h6, p, label, div {
+    color: #222222 !important;
 }
 
 .result-box {
     background-color: white;
     padding: 20px;
     border-radius: 12px;
-    border: 1px solid #dddddd;
+    border: 1px solid #dcdcdc;
     margin-top: 20px;
+    color: #222222;
+}
+
+section[data-testid="stSidebar"] {
+    background-color: #eeeeee;
 }
 
 </style>
