@@ -5,7 +5,7 @@ import streamlit as st
 # -------------------------------------------------
 
 st.set_page_config(
-    page_title="Compatibilidad de Personalidad",
+    page_title="Test de Compatibilidad de Personalidad",
     layout="centered"
 )
 
@@ -25,12 +25,28 @@ h1, h2, h3, h4, h5, h6, p, label, div {
     color: #222222 !important;
 }
 
+/* CAJA DE RESULTADO */
 .caja-resultado {
     background-color: white;
     padding: 20px;
     border-radius: 12px;
     border: 1px solid #dcdcdc;
     margin-top: 20px;
+}
+
+/* BOTÓN PERSONALIZADO */
+.stButton > button {
+    background-color: white;
+    color: #222;
+    border: 2px solid #222;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.stButton > button:hover {
+    background-color: #222;
+    color: white;
 }
 
 </style>
@@ -40,7 +56,11 @@ h1, h2, h3, h4, h5, h6, p, label, div {
 # TÍTULO
 # -------------------------------------------------
 
-st.title("Buscador de Compatibilidad de Personalidad")
+st.markdown("""
+<h1 style='text-align:center; color:#222;'>
+Test de Compatibilidad de Personalidad
+</h1>
+""", unsafe_allow_html=True)
 
 st.write("Responde las siguientes preguntas para descubrir tu personalidad y celebridades compatibles.")
 
