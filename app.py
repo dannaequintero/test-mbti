@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 st.title("Test de Compatibilidad de Personalidad")
-st.write("Responde las 16 preguntas para obtener tu MBTI y compatibilidad.")
+st.write("Responde las 16 preguntas y descubre tu MBTI, personalidad y compatibilidad.")
 
 # -------------------------------------------------
 # CARGAR CSV
@@ -22,7 +22,7 @@ st.write("Responde las 16 preguntas para obtener tu MBTI y compatibilidad.")
 df = pd.read_csv("celebridades_mbti.csv")
 
 # -------------------------------------------------
-# VECTOR MBTI
+# MAPEO MBTI → VECTORES
 # -------------------------------------------------
 
 mbti_to_vec = {
@@ -142,38 +142,46 @@ if st.button("Ver resultado"):
     st.success(f"Tu tipo MBTI es: {resultado_mbti}")
 
     # -------------------------------------------------
-# DESCRIPCIÓN DE PERSONALIDAD
-# -------------------------------------------------
-
-descripciones = {
-    "INTJ": "Personas estratégicas, analíticas y muy independientes.",
-    "INTP": "Lógicos, curiosos y amantes del conocimiento.",
-    "ENTJ": "Líderes naturales, organizados y decididos.",
-    "ENTP": "Creativos, debatientes y muy innovadores.",
-    "INFJ": "Empáticos, profundos y visionarios.",
-    "INFP": "Idealistas, sensibles y guiados por valores.",
-    "ENFJ": "Líderes sociales, empáticos y motivadores.",
-    "ENFP": "Entusiastas, creativos y sociables.",
-    "ISTJ": "Responsables, estructurados y confiables.",
-    "ISFJ": "Protectores, leales y detallistas.",
-    "ESTJ": "Prácticos, directos y organizados.",
-    "ESFJ": "Sociales, amables y cooperativos.",
-    "ISTP": "Observadores, prácticos y resolutivos.",
-    "ISFP": "Artísticos, tranquilos y sensibles.",
-    "ESTP": "Energéticos, espontáneos y arriesgados.",
-    "ESFP": "Extrovertidos, divertidos y expresivos."
-}
-
-st.subheader("Tu personalidad")
-st.write(descripciones.get(resultado_mbti, "Perfil no encontrado"))
-    
+    # DESCRIPCIÓN PERSONALIDAD
     # -------------------------------------------------
-    # SIMILITUD
+
+    descripciones = {
+        "INTJ": "Personas estratégicas, analíticas y muy independientes.",
+        "INTP": "Lógicos, curiosos y amantes del conocimiento.",
+        "ENTJ": "Líderes naturales, decididos y organizados.",
+        "ENTP": "Creativos, innovadores y debatientes.",
+        "INFJ": "Profundos, empáticos y visionarios.",
+        "INFP": "Idealistas, sensibles y guiados por valores.",
+        "ENFJ": "Líderes sociales y empáticos.",
+        "ENFP": "Entusiastas y creativos.",
+        "ISTJ": "Responsables y estructurados.",
+        "ISFJ": "Leales y protectores.",
+        "ESTJ": "Prácticos y directos.",
+        "ESFJ": "Sociales y cooperativos.",
+        "ISTP": "Observadores y resolutivos.",
+        "ISFP": "Artísticos y sensibles.",
+        "ESTP": "Energéticos y espontáneos.",
+        "ESFP": "Extrovertidos y divertidos."
+    }
+
+    st.subheader("Tu personalidad")
+    st.write(descripciones.get(resultado_mbti, "Perfil no disponible"))
+
+    # -------------------------------------------------
+    # VECTOR USUARIO
     # -------------------------------------------------
 
     usuario_vec = mbti_to_vec.get(resultado_mbti, [0,0,0,0])
 
+    # -------------------------------------------------
+    # VECTOR DATASET
+    # -------------------------------------------------
+
     df["vector"] = df["mbti"].apply(lambda x: mbti_to_vec.get(x, [0,0,0,0]))
+
+    # -------------------------------------------------
+    # SIMILITUD
+    # -------------------------------------------------
 
     df["compatibilidad"] = df["vector"].apply(
         lambda v: cosine_similarity(usuario_vec, v)
