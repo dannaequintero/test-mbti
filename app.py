@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import requests
 
 st.set_page_config(
     page_title="Test de Compatibilidad de Personalidad",
@@ -10,9 +11,28 @@ st.set_page_config(
 
 st.title("Test de Compatibilidad de Personalidad")
 
+# ---------------- FUNCIÓN IMAGEN SEGURA ----------------
+
+def imagen_segura(url):
+    try:
+        if url is None or str(url).strip() == "":
+            return "https://via.placeholder.com/300"
+
+        r = requests.head(url, timeout=3)
+
+        if r.status_code == 200:
+            return url
+        else:
+            return "https://via.placeholder.com/300"
+
+    except:
+        return "https://via.placeholder.com/300"
+
+
 # ---------------- CSV ----------------
 
 df = pd.read_csv("celebridades_mbti.csv")
+df["imagen"] = df["imagen"].apply(imagen_segura)
 
 # ---------------- MBTI VECTOR ----------------
 
@@ -133,6 +153,8 @@ if st.button("Ver resultado"):
     mbti += "T" if T >= F else "F"
     mbti += "J" if J >= P else "P"
 
+    st.success(f"MBTI: {mbti}")
+
     # ---------------- ENEAGRAMA ----------------
 
     if mbti in ["INTJ","INTP"]:
@@ -148,13 +170,7 @@ if st.button("Ver resultado"):
     else:
         eneagrama = "6w5"
 
-    st.success(f"MBTI: {mbti} | Eneagrama: {eneagrama}")
-
-    # ---------------- PERSONALIDAD ----------------
-
-    st.subheader("Tu personalidad")
-
-    st.info(mbti_desc[mbti])
+    st.info(f"Eneagrama: {eneagrama}")
 
     eneagrama_desc = {
         "5w4":"Observador, introspectivo y creativo.",
@@ -196,50 +212,7 @@ if st.button("Ver resultado"):
         lambda v: cosine_similarity(user_vector, v)
     ) * 100
 
-    # ---------------- CATEGORÍAS BONITAS ----------------
-
-    st.subheader("Tus categorías de personalidad")
-
-    col1, col2, col3, col4 = st.columns(4)
-
-    col1.metric("Analítico", "✔" if T > F else "✖")
-    col2.metric("Social", "✔" if E > I else "✖")
-    col3.metric("Creativo", "✔" if N > S else "✖")
-    col4.metric("Estructura", "✔" if J > P else "✖")
-
-    st.markdown("---")
-
-    # ---------------- EXPLICACIÓN AUTOMÁTICA ----------------
-
-    st.subheader("Explicación de tu resultado")
-
-    explicacion = []
-
-    if T > F:
-        explicacion.append("tiendes a tomar decisiones lógicas")
-    else:
-        explicacion.append("priorizas lo emocional")
-
-    if E > I:
-        explicacion.append("eres más social y extrovertido")
-    else:
-        explicacion.append("prefieres la introspección")
-
-    if N > S:
-        explicacion.append("te enfocas en ideas y futuro")
-    else:
-        explicacion.append("te basas en hechos concretos")
-
-    if J > P:
-        explicacion.append("te gusta la estructura y planificación")
-    else:
-        explicacion.append("eres flexible y espontáneo")
-
-    st.write("Te identificas porque: " + ", ".join(explicacion) + ".")
-
-    st.markdown("---")
-
-    # ---------------- TOP ----------------
+    # ---------------- RESULTADOS ----------------
 
     st.subheader("Top celebridades compatibles")
 
@@ -258,12 +231,9 @@ if st.button("Ver resultado"):
             st.write(f"MBTI: {row['mbti']} | Eneagrama: {row['eneagrama']}")
             st.metric("Compatibilidad", f"{row['compatibilidad']:.1f}%")
 
-            st.write("Coincide contigo en varios rasgos de personalidad.")
-
             st.caption(
-                f"Categorías: Analítico={row['analitico']} | Social={row['social']} | Creativo={row['creativo']} | Líder={row['lider']}"
+                f"Analítico={row['analitico']} | Social={row['social']} | Creativo={row['creativo']} | Líder={row['lider']}"
             )
 
-        st.markdown("---")
-
-    st.success("Modelo híbrido: MBTI + Eneagrama + categorías de personalidad + similitud vectorial")
+    st.markdown("---")
+    st.success("Modelo híbrido: MBTI + Eneagrama + categorías + similitud vectorial")
