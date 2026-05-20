@@ -1,34 +1,44 @@
 nombre,mbti,eneagrama,imagen,analitico,social,creativo,lider,emocional,introversion,logica,estructura
 Elon Musk,INTJ,5w4,https://upload.wikimedia.org/wikipedia/commons/4/49/Elon_Musk_2015.jpg,1,0,1,1,0,1,1,1
-Mark Zuckerberg,INTJ,5w6,https://upload.wikimedia.org/wikipedia/commons/3/3f/Mark_Zuckerberg_F8_2019_Keynote_%28cropped%29.jpg,1,0,0,1,0,1,1,1
+Mark Zuckerberg,INTJ,5w6,https://upload.wikimedia.org/wikipedia/commons/3/3f/Mark_Zuckerberg_F8_2019_Keynote.jpg,1,0,0,1,0,1,1,1
 Isaac Newton,INTJ,5w6,https://upload.wikimedia.org/wikipedia/commons/d/d4/GodfreyKneller-IsaacNewton-1689.jpg,1,0,0,0,0,1,1,1
+
 Albert Einstein,INTP,5w4,https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg,1,0,1,0,0,1,1,0
 Bill Gates,INTP,5w6,https://upload.wikimedia.org/wikipedia/commons/a/a0/Bill_Gates_2018.jpg,1,0,0,0,0,1,1,1
 Marie Curie,INTP,1w9,https://upload.wikimedia.org/wikipedia/commons/6/69/Marie_Curie_c1920.jpg,1,0,1,0,1,1,1,0
+
 Steve Jobs,ENTJ,3w4,https://upload.wikimedia.org/wikipedia/commons/8/85/Steve_Jobs_Headshot_2010-CROP.jpg,1,0,1,1,0,0,1,1
-Margaret Thatcher,ENTJ,8w7,https://upload.wikimedia.org/wikipedia/commons/3/3f/Margaret_Thatcher_stock_portrait_%28cropped%29.jpg,1,0,0,1,0,0,1,1
+Margaret Thatcher,ENTJ,8w7,https://upload.wikimedia.org/wikipedia/commons/3/3f/Margaret_Thatcher_stock_portrait.jpg,1,0,0,1,0,0,1,1
 Gordon Ramsay,ENTJ,8w7,https://upload.wikimedia.org/wikipedia/commons/6/6f/Gordon_Ramsay.jpg,1,1,0,1,1,0,1,1
-Robert Downey Jr.,ENTP,7w6,https://upload.wikimedia.org/wikipedia/commons/5/5b/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg,0,1,1,0,1,0,0,0
+
+Robert Downey Jr.,ENTP,7w6,https://upload.wikimedia.org/wikipedia/commons/5/5b/Robert_Downey_Jr_2014_Comic_Con.jpg,0,1,1,0,1,0,0,0
 Sacha Baron Cohen,ENTP,7w8,https://upload.wikimedia.org/wikipedia/commons/0/0b/Sacha_Baron_Cohen_Cannes_2013.jpg,0,1,1,0,1,0,0,0
 Tom Hanks,ENTP,2w1,https://upload.wikimedia.org/wikipedia/commons/6/69/Tom_Hanks_TIFF_2019.jpg,0,1,1,0,1,0,0,0
-Martin Luther King Jr.,INFJ,1w9,https://upload.wikimedia.org/wikipedia/commons/0/05/Martin_Luther_King%2C_Jr..jpg,0,1,1,1,1,1,0,1
-Nelson Mandela,INFJ,9w1,https://upload.wikimedia.org/wikipedia/commons/0/0d/Nelson_Mandela-2008_%28edit%29.jpg,0,1,0,1,1,1,0,1
+
+Martin Luther King Jr.,INFJ,1w9,https://upload.wikimedia.org/wikipedia/commons/0/05/Martin_Luther_King_Jr.jpg,0,1,1,1,1,1,0,1
+Nelson Mandela,INFJ,9w1,https://upload.wikimedia.org/wikipedia/commons/0/0d/Nelson_Mandela-2008.jpg,0,1,0,1,1,1,0,1
 Lady Gaga,INFJ,4w3,https://upload.wikimedia.org/wikipedia/commons/a/a0/Lady_Gaga_2017.jpg,0,1,1,1,1,1,0,1
+
 J.K. Rowling,INFP,4w5,https://upload.wikimedia.org/wikipedia/commons/5/5d/J._K._Rowling_2010.jpg,0,1,1,0,1,1,0,0
 Johnny Depp,INFP,4w5,https://upload.wikimedia.org/wikipedia/commons/3/3b/Johnny_Depp_2011.jpg,0,1,1,0,1,1,0,0
 Tim Burton,INFP,4w5,https://upload.wikimedia.org/wikipedia/commons/0/0a/Tim_Burton_2012.jpg,0,1,1,0,1,1,0,0
+
 Oprah Winfrey,ENFJ,2w3,https://upload.wikimedia.org/wikipedia/commons/6/6b/Oprah_in_2014.jpg,0,1,1,1,1,0,0,1
 Barack Obama,ENFJ,3w2,https://upload.wikimedia.org/wikipedia/commons/8/8d/President_Barack_Obama.jpg,0,1,1,1,1,0,0,1
 Jennifer Lawrence,ENFJ,7w6,https://upload.wikimedia.org/wikipedia/commons/9/9b/Jennifer_Lawrence_2018.jpg,0,1,1,1,1,0,0,1
+
 Taylor Swift,ESFJ,3w2,https://upload.wikimedia.org/wikipedia/commons/8/8f/Taylor_Swift_2019.jpg,0,1,1,0,1,0,0,1
 Beyoncé,ESFJ,3w4,https://upload.wikimedia.org/wikipedia/commons/9/97/Beyonce_-_Formation_World_Tour.jpg,0,1,1,1,1,0,0,1
 Bill Clinton,ESFJ,2w3,https://upload.wikimedia.org/wikipedia/commons/d/d3/Bill_Clinton.jpg,0,1,1,0,1,0,0,1
+
 Michael Jackson,ISFP,4w3,https://upload.wikimedia.org/wikipedia/commons/5/51/Michael_Jackson_in_1988.jpg,0,0,1,0,1,1,0,0
-Frida Kahlo,ISFP,4w5,https://upload.wikimedia.org/wikipedia/commons/1/1e/Frida_Kahlo_%28self_portrait%29.jpg,0,0,1,0,1,1,0,0
-Prince,ISFP,4w3,https://upload.wikimedia.org/wikipedia/commons/7/7f/Prince_%281987_publicity_photo%29.jpg,0,0,1,0,1,1,0,0
+Frida Kahlo,ISFP,4w5,https://upload.wikimedia.org/wikipedia/commons/1/1e/Frida_Kahlo_self_portrait.jpg,0,0,1,0,1,1,0,0
+Prince,ISFP,4w3,https://upload.wikimedia.org/wikipedia/commons/7/7f/Prince_1987_publicity_photo.jpg,0,0,1,0,1,1,0,0
+
 Michael Jordan,ISTP,8w9,https://upload.wikimedia.org/wikipedia/commons/a/ae/Michael_Jordan_in_2014.jpg,1,0,0,1,0,0,1,1
 Bruce Lee,ISTP,8w7,https://upload.wikimedia.org/wikipedia/commons/0/0c/Bruce_Lee_1973.jpg,1,0,0,1,0,0,1,1
-Clint Eastwood,ISTP,9w8,https://upload.wikimedia.org/wikipedia/commons/5/5a/Clint_Eastwood_%282018%29.jpg,1,0,0,1,0,0,1,1
+Clint Eastwood,ISTP,9w8,https://upload.wikimedia.org/wikipedia/commons/5/5a/Clint_Eastwood_2018.jpg,1,0,0,1,0,0,1,1
+
 Marilyn Monroe,ESFP,7w6,https://upload.wikimedia.org/wikipedia/commons/7/7f/Marilyn_Monroe_in_1953.jpg,0,1,1,0,1,0,0,0
 Adele,ESFP,9w1,https://upload.wikimedia.org/wikipedia/commons/4/4d/Adele_2016.jpg,0,1,1,0,1,0,0,0
 Jamie Foxx,ESFP,7w8,https://upload.wikimedia.org/wikipedia/commons/4/4f/Jamie_Foxx_2019.jpg,0,1,1,0,1,0,0,0
