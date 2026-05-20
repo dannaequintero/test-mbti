@@ -40,7 +40,7 @@ def cosine_similarity(a, b):
     b = np.array(b)
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-# ---------------- DESCRIPCIÓN ----------------
+# ---------------- DESCRIPCIONES ----------------
 
 mbti_desc = {
     "INTJ":"Estratega, independiente y analítico.",
@@ -186,6 +186,45 @@ if st.button("Ver resultado"):
         lambda v: cosine_similarity(user_vector, v)
     ) * 100
 
+    # ---------------- CATEGORÍAS BONITAS ----------------
+
+    st.subheader("Tus categorías de personalidad")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric("Analítico", "✔" if T > F else "✖")
+    col2.metric("Social", "✔" if E > I else "✖")
+    col3.metric("Creativo", "✔" if N > S else "✖")
+    col4.metric("Estructura", "✔" if J > P else "✖")
+
+    # ---------------- EXPLICACIÓN ----------------
+
+    st.subheader("¿Por qué eres así?")
+
+    explicacion = []
+
+    if T > F:
+        explicacion.append("tomas decisiones lógicas")
+    else:
+        explicacion.append("priorizas lo emocional")
+
+    if E > I:
+        explicacion.append("eres más social y extrovertido")
+    else:
+        explicacion.append("prefieres la introspección")
+
+    if N > S:
+        explicacion.append("te enfocas en ideas y futuro")
+    else:
+        explicacion.append("te basas en hechos concretos")
+
+    if J > P:
+        explicacion.append("te gusta la estructura y planificación")
+    else:
+        explicacion.append("eres flexible y espontáneo")
+
+    st.success("Te identificas porque: " + ", ".join(explicacion) + ".")
+
     # ---------------- RESULTADOS ----------------
 
     st.subheader("Top compatibilidad")
@@ -206,9 +245,8 @@ if st.button("Ver resultado"):
             st.write(f"MBTI: {row['mbti']} | Eneagrama: {row['eneagrama']}")
             st.metric("Compatibilidad", f"{row['compatibilidad']:.1f}%")
 
-            # explicación del match
             st.caption(
-                "Coincidencia basada en estructura de personalidad (MBTI + rasgos de comportamiento)"
+                "Coincidencia basada en rasgos de personalidad (MBTI + vectores de comportamiento)"
             )
 
     st.markdown("---")
