@@ -43,22 +43,22 @@ def cosine_similarity(a, b):
 # ---------------- DESCRIPCIONES MBTI ----------------
 
 mbti_desc = {
-    "INTJ":"Personas estratégicas, independientes y muy analíticas. Les gusta planear a largo plazo.",
-    "INTP":"Analíticos, curiosos y amantes de la lógica y la teoría.",
-    "ENTJ":"Líderes naturales, decididos y orientados a resultados.",
-    "ENTP":"Creativos, ingeniosos y amantes del debate y nuevas ideas.",
-    "INFJ":"Intuitivos, empáticos y con fuerte visión del futuro.",
-    "INFP":"Idealistas, sensibles y guiados por sus valores personales.",
-    "ENFJ":"Carismáticos, empáticos y líderes sociales naturales.",
-    "ENFP":"Entusiastas, creativos y llenos de energía social.",
-    "ISTJ":"Responsables, organizados y muy confiables.",
-    "ISFJ":"Protectores, leales y detallistas.",
-    "ESTJ":"Prácticos, directos y excelentes organizadores.",
-    "ESFJ":"Amables, sociales y enfocados en la armonía.",
-    "ISTP":"Prácticos, observadores y resolutivos.",
-    "ISFP":"Artísticos, sensibles y tranquilos.",
-    "ESTP":"Energéticos, espontáneos y orientados a la acción.",
-    "ESFP":"Extrovertidos, divertidos y expresivos."
+    "INTJ":"Personas estratégicas, independientes y muy analíticas.",
+    "INTP":"Analíticos, curiosos y amantes de la lógica.",
+    "ENTJ":"Líderes naturales y orientados a resultados.",
+    "ENTP":"Creativos, ingeniosos y debatidores.",
+    "INFJ":"Intuitivos y empáticos con visión profunda.",
+    "INFP":"Idealistas guiados por valores.",
+    "ENFJ":"Carismáticos y líderes sociales.",
+    "ENFP":"Entusiastas y creativos.",
+    "ISTJ":"Responsables y organizados.",
+    "ISFJ":"Leales y protectores.",
+    "ESTJ":"Directos y organizadores.",
+    "ESFJ":"Sociales y cooperativos.",
+    "ISTP":"Prácticos y observadores.",
+    "ISFP":"Artísticos y sensibles.",
+    "ESTP":"Energéticos y espontáneos.",
+    "ESFP":"Extrovertidos y expresivos."
 }
 
 # ---------------- PREGUNTAS ----------------
@@ -133,7 +133,8 @@ if st.button("Ver resultado"):
     mbti += "T" if T >= F else "F"
     mbti += "J" if J >= P else "P"
 
-    # eneagrama automático
+    # ---------------- ENEAGRAMA ----------------
+
     if mbti in ["INTJ","INTP"]:
         eneagrama = "5w4"
     elif mbti in ["ENTJ","ESTJ"]:
@@ -156,27 +157,50 @@ if st.button("Ver resultado"):
     st.write(mbti_desc[mbti])
 
     eneagrama_desc = {
-        "5w4":"Observador, introspectivo y creativo. Busca entender el mundo en profundidad.",
-        "5w6":"Analítico, lógico y orientado a la seguridad y conocimiento.",
-        "4w5":"Emocional, artístico y muy introspectivo.",
-        "3w2":"Orientado al éxito, sociable y competitivo.",
-        "7w6":"Optimista, energético y busca nuevas experiencias.",
-        "8w7":"Líder fuerte, dominante y seguro.",
-        "2w3":"Empático, sociable y orientado a ayudar.",
-        "6w5":"Leal, cauteloso y analítico.",
-        "9w1":"Pacífico, equilibrado y evita conflictos."
+        "5w4":"Observador, introspectivo y creativo.",
+        "5w6":"Analítico y lógico.",
+        "4w5":"Artístico y emocional.",
+        "3w2":"Orientado al éxito.",
+        "7w6":"Optimista y energético.",
+        "8w7":"Líder fuerte.",
+        "2w3":"Empático y social.",
+        "6w5":"Leal y cauteloso.",
+        "9w1":"Pacífico y equilibrado."
     }
 
     st.write(eneagrama_desc[eneagrama])
 
-    # ---------------- COMPATIBILIDAD ----------------
+    # ---------------- VECTOR USUARIO (AQUÍ ESTÁ LA MEJORA) ----------------
 
-    usuario_vec = mbti_to_vec.get(mbti, [0,0,0,0])
-    df["vector"] = df["mbti"].apply(lambda x: mbti_to_vec.get(x, [0,0,0,0]))
+    user_vector = np.array([
+        T > F,   # analítico
+        E > I,   # social
+        N > S,   # creativo
+        J > P,   # líder
+        F > T,   # emocional
+        I > E,   # introversión
+        T > F,   # lógica
+        J > P    # estructura
+    ]).astype(int)
+
+    # ---------------- VECTOR DATASET ----------------
+
+    df["vector"] = df.apply(lambda row: np.array([
+        row["analitico"],
+        row["social"],
+        row["creativo"],
+        row["lider"],
+        row["emocional"],
+        row["introversion"],
+        row["logica"],
+        row["estructura"]
+    ]), axis=1)
 
     df["compatibilidad"] = df["vector"].apply(
-        lambda v: cosine_similarity(usuario_vec, v)
+        lambda v: cosine_similarity(user_vector, v)
     ) * 100
+
+    # ---------------- RESULTADOS ----------------
 
     st.subheader("Top celebridades compatibles")
 
@@ -186,10 +210,10 @@ if st.button("Ver resultado"):
 
         st.markdown(f"### {row['nombre']}")
         st.write(f"MBTI: {row['mbti']} | Eneagrama: {row['eneagrama']}")
-        st.write(f"{row['compatibilidad']:.1f}% compatibilidad")
+        st.write(f"Compatibilidad: {row['compatibilidad']:.1f}%")
 
-        st.image(row["imagen"], width=150)
+        st.image(row["imagen"], use_container_width=True)
 
         st.markdown("---")
 
-    st.info("Modelo MBTI + Eneagrama con interpretación psicológica")
+    st.info("Modelo híbrido: MBTI + Eneagrama + categorías de personalidad")
