@@ -133,14 +133,6 @@ if st.button("Ver resultado"):
     mbti += "T" if T >= F else "F"
     mbti += "J" if J >= P else "P"
 
-    st.success(f"Tu MBTI es: {mbti}")
-
-    # ---------------- PERSONALIDAD ----------------
-
-    st.subheader("Tu personalidad")
-
-    st.info(mbti_desc[mbti])
-
     # ---------------- ENEAGRAMA ----------------
 
     if mbti in ["INTJ","INTP"]:
@@ -156,9 +148,27 @@ if st.button("Ver resultado"):
     else:
         eneagrama = "6w5"
 
-    st.write(f"Eneagrama: {eneagrama}")
+    st.success(f"MBTI: {mbti} | Eneagrama: {eneagrama}")
 
-    # ---------------- VECTOR USUARIO ----------------
+    # ---------------- PERSONALIDAD ----------------
+
+    st.subheader("Tu personalidad")
+
+    st.info(mbti_desc[mbti])
+
+    eneagrama_desc = {
+        "5w4":"Observador, introspectivo y creativo.",
+        "5w6":"Analítico y lógico.",
+        "4w5":"Artístico y emocional.",
+        "7w6":"Optimista y energético.",
+        "8w7":"Líder fuerte.",
+        "2w3":"Empático y social.",
+        "6w5":"Leal y cauteloso."
+    }
+
+    st.write(eneagrama_desc[eneagrama])
+
+    # ---------------- VECTOR ----------------
 
     user_vector = np.array([
         T > F,
@@ -186,15 +196,58 @@ if st.button("Ver resultado"):
         lambda v: cosine_similarity(user_vector, v)
     ) * 100
 
-    # ---------------- RESULTADOS ----------------
+    # ---------------- CATEGORÍAS BONITAS ----------------
 
-    st.subheader("Top compatibilidad")
+    st.subheader("Tus categorías de personalidad")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric("Analítico", "✔" if T > F else "✖")
+    col2.metric("Social", "✔" if E > I else "✖")
+    col3.metric("Creativo", "✔" if N > S else "✖")
+    col4.metric("Estructura", "✔" if J > P else "✖")
+
+    st.markdown("---")
+
+    # ---------------- EXPLICACIÓN AUTOMÁTICA ----------------
+
+    st.subheader("Explicación de tu resultado")
+
+    explicacion = []
+
+    if T > F:
+        explicacion.append("tiendes a tomar decisiones lógicas")
+    else:
+        explicacion.append("priorizas lo emocional")
+
+    if E > I:
+        explicacion.append("eres más social y extrovertido")
+    else:
+        explicacion.append("prefieres la introspección")
+
+    if N > S:
+        explicacion.append("te enfocas en ideas y futuro")
+    else:
+        explicacion.append("te basas en hechos concretos")
+
+    if J > P:
+        explicacion.append("te gusta la estructura y planificación")
+    else:
+        explicacion.append("eres flexible y espontáneo")
+
+    st.write("Te identificas porque: " + ", ".join(explicacion) + ".")
+
+    st.markdown("---")
+
+    # ---------------- TOP ----------------
+
+    st.subheader("Top celebridades compatibles")
 
     top = df.sort_values("compatibilidad", ascending=False).head(5)
 
     for _, row in top.iterrows():
 
-        st.markdown("---")
+        st.markdown(f"### {row['nombre']}")
 
         col1, col2 = st.columns([1, 2])
 
@@ -202,14 +255,15 @@ if st.button("Ver resultado"):
             st.image(row["imagen"], use_container_width=True)
 
         with col2:
-            st.markdown(f"### {row['nombre']}")
             st.write(f"MBTI: {row['mbti']} | Eneagrama: {row['eneagrama']}")
             st.metric("Compatibilidad", f"{row['compatibilidad']:.1f}%")
 
-            # explicación del match
+            st.write("Coincide contigo en varios rasgos de personalidad.")
+
             st.caption(
-                "Coincidencia basada en estructura de personalidad (MBTI + rasgos de comportamiento)"
+                f"Categorías: Analítico={row['analitico']} | Social={row['social']} | Creativo={row['creativo']} | Líder={row['lider']}"
             )
 
-    st.markdown("---")
-    st.success("Modelo híbrido: MBTI + Eneagrama + análisis vectorial de personalidad")
+        st.markdown("---")
+
+    st.success("Modelo híbrido: MBTI + Eneagrama + categorías de personalidad + similitud vectorial")
