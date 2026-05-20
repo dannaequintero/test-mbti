@@ -2,10 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-# -------------------------------------------------
-# CONFIGURACIÓN
-# -------------------------------------------------
-
 st.set_page_config(
     page_title="Test de Compatibilidad de Personalidad",
     page_icon="🧠",
@@ -14,15 +10,11 @@ st.set_page_config(
 
 st.title("Test de Compatibilidad de Personalidad")
 
-# -------------------------------------------------
-# CARGA CSV
-# -------------------------------------------------
+# ---------------- CSV ----------------
 
 df = pd.read_csv("celebridades_mbti.csv")
 
-# -------------------------------------------------
-# VECTOR MBTI
-# -------------------------------------------------
+# ---------------- MBTI VECTOR ----------------
 
 mbti_to_vec = {
     "INTJ":[1,0,1,0],
@@ -43,80 +35,62 @@ mbti_to_vec = {
     "ESFP":[0,1,0,1]
 }
 
-# -------------------------------------------------
-# COSINE SIMILARITY
-# -------------------------------------------------
-
 def cosine_similarity(a, b):
     a = np.array(a)
     b = np.array(b)
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-# -------------------------------------------------
-# PREGUNTAS MBTI (16)
-# -------------------------------------------------
+# ---------------- DESCRIPCIONES MBTI ----------------
 
-st.subheader("Cuestionario MBTI")
-
-q1 = st.radio("1. Prefieres:", ["Solo", "Con gente"])
-q2 = st.radio("2. Te recargas con:", ["Soledad", "Socializar"])
-q3 = st.radio("3. En eventos eres:", ["Observador", "Participativo"])
-q4 = st.radio("4. Prefieres trabajar:", ["Individual", "Equipo"])
-
-q5 = st.radio("5. Prefieres:", ["Hechos", "Ideas"])
-q6 = st.radio("6. Te enfocas en:", ["Presente", "Futuro"])
-q7 = st.radio("7. Confías en:", ["Experiencia", "Intuición"])
-q8 = st.radio("8. Aprendes mejor con:", ["Ejemplos", "Conceptos"])
-
-q9 = st.radio("9. Decides con:", ["Lógica", "Emoción"])
-q10 = st.radio("10. Valoras:", ["Justicia", "Empatía"])
-q11 = st.radio("11. Eres más:", ["Objetivo", "Comprensivo"])
-q12 = st.radio("12. En conflictos:", ["Analizas", "Sientes"])
-
-q13 = st.radio("13. Prefieres:", ["Planificar", "Improvisar"])
-q14 = st.radio("14. Estilo de vida:", ["Organizado", "Flexible"])
-q15 = st.radio("15. Trabajas mejor:", ["Con estructura", "Sin estructura"])
-q16 = st.radio("16. Prefieres terminar:", ["Antes", "Último momento"])
-
-# -------------------------------------------------
-# ENEAGRAMA
-# -------------------------------------------------
-
-st.subheader("Eneagrama")
-
-e1 = st.radio("¿Con cuál te identificas más?", [
-    "Perfeccionista",
-    "Ayudador",
-    "Exitoso",
-    "Creativo",
-    "Investigador",
-    "Leal",
-    "Entusiasta",
-    "Líder",
-    "Pacificador"
-])
-
-eneagrama_map = {
-    "Perfeccionista":"1w9",
-    "Ayudador":"2w3",
-    "Exitoso":"3w2",
-    "Creativo":"4w5",
-    "Investigador":"5w4",
-    "Leal":"6w5",
-    "Entusiasta":"7w6",
-    "Líder":"8w7",
-    "Pacificador":"9w1"
+mbti_desc = {
+    "INTJ":"Personas estratégicas, independientes y muy analíticas. Les gusta planear a largo plazo.",
+    "INTP":"Analíticos, curiosos y amantes de la lógica y la teoría.",
+    "ENTJ":"Líderes naturales, decididos y orientados a resultados.",
+    "ENTP":"Creativos, ingeniosos y amantes del debate y nuevas ideas.",
+    "INFJ":"Intuitivos, empáticos y con fuerte visión del futuro.",
+    "INFP":"Idealistas, sensibles y guiados por sus valores personales.",
+    "ENFJ":"Carismáticos, empáticos y líderes sociales naturales.",
+    "ENFP":"Entusiastas, creativos y llenos de energía social.",
+    "ISTJ":"Responsables, organizados y muy confiables.",
+    "ISFJ":"Protectores, leales y detallistas.",
+    "ESTJ":"Prácticos, directos y excelentes organizadores.",
+    "ESFJ":"Amables, sociales y enfocados en la armonía.",
+    "ISTP":"Prácticos, observadores y resolutivos.",
+    "ISFP":"Artísticos, sensibles y tranquilos.",
+    "ESTP":"Energéticos, espontáneos y orientados a la acción.",
+    "ESFP":"Extrovertidos, divertidos y expresivos."
 }
 
-# -------------------------------------------------
-# RESULTADO
-# -------------------------------------------------
+# ---------------- PREGUNTAS ----------------
+
+st.subheader("Cuestionario")
+
+q1 = st.radio("Prefieres:", ["Solo", "Con gente"])
+q2 = st.radio("Te recargas con:", ["Soledad", "Socializar"])
+q3 = st.radio("En eventos eres:", ["Observador", "Participativo"])
+q4 = st.radio("Prefieres trabajar:", ["Individual", "Equipo"])
+
+q5 = st.radio("Prefieres:", ["Hechos", "Ideas"])
+q6 = st.radio("Te enfocas en:", ["Presente", "Futuro"])
+q7 = st.radio("Confías en:", ["Experiencia", "Intuición"])
+q8 = st.radio("Aprendes mejor con:", ["Ejemplos", "Conceptos"])
+
+q9 = st.radio("Decides con:", ["Lógica", "Emoción"])
+q10 = st.radio("Valoras:", ["Justicia", "Empatía"])
+q11 = st.radio("Eres más:", ["Objetivo", "Comprensivo"])
+q12 = st.radio("En conflictos:", ["Analizas", "Sientes"])
+
+q13 = st.radio("Prefieres:", ["Planificar", "Improvisar"])
+q14 = st.radio("Estilo de vida:", ["Organizado", "Flexible"])
+q15 = st.radio("Trabajas mejor:", ["Con estructura", "Sin estructura"])
+q16 = st.radio("Prefieres terminar:", ["Antes", "Último momento"])
+
+# ---------------- RESULTADO ----------------
 
 if st.button("Ver resultado"):
 
     I = E = N = S = T = F = J = P = 0
 
-    # E / I
     if q1 == "Solo": I += 1
     else: E += 1
     if q2 == "Soledad": I += 1
@@ -126,7 +100,6 @@ if st.button("Ver resultado"):
     if q4 == "Individual": I += 1
     else: E += 1
 
-    # S / N
     if q5 == "Hechos": S += 1
     else: N += 1
     if q6 == "Presente": S += 1
@@ -136,7 +109,6 @@ if st.button("Ver resultado"):
     if q8 == "Ejemplos": S += 1
     else: N += 1
 
-    # T / F
     if q9 == "Lógica": T += 1
     else: F += 1
     if q10 == "Justicia": T += 1
@@ -146,7 +118,6 @@ if st.button("Ver resultado"):
     if q12 == "Analizas": T += 1
     else: F += 1
 
-    # J / P
     if q13 == "Planificar": J += 1
     else: P += 1
     if q14 == "Organizado": J += 1
@@ -156,32 +127,56 @@ if st.button("Ver resultado"):
     if q16 == "Antes": J += 1
     else: P += 1
 
-    # MBTI final
     mbti = ""
     mbti += "I" if I >= E else "E"
     mbti += "N" if N >= S else "S"
     mbti += "T" if T >= F else "F"
     mbti += "J" if J >= P else "P"
 
-    eneagrama = eneagrama_map[e1]
+    # eneagrama automático
+    if mbti in ["INTJ","INTP"]:
+        eneagrama = "5w4"
+    elif mbti in ["ENTJ","ESTJ"]:
+        eneagrama = "8w7"
+    elif mbti in ["ENFP","ESFP"]:
+        eneagrama = "7w6"
+    elif mbti in ["INFJ","INFP"]:
+        eneagrama = "4w5"
+    elif mbti in ["ENFJ","ESFJ"]:
+        eneagrama = "2w3"
+    else:
+        eneagrama = "6w5"
 
-    st.success(f"Tu tipo es: {mbti} | Eneagrama: {eneagrama}")
+    st.success(f"MBTI: {mbti} | Eneagrama: {eneagrama}")
 
-    # -------------------------------------------------
-    # COMPATIBILIDAD
-    # -------------------------------------------------
+    # ---------------- DESCRIPCIÓN ----------------
+
+    st.subheader("Tu personalidad")
+
+    st.write(mbti_desc[mbti])
+
+    eneagrama_desc = {
+        "5w4":"Observador, introspectivo y creativo. Busca entender el mundo en profundidad.",
+        "5w6":"Analítico, lógico y orientado a la seguridad y conocimiento.",
+        "4w5":"Emocional, artístico y muy introspectivo.",
+        "3w2":"Orientado al éxito, sociable y competitivo.",
+        "7w6":"Optimista, energético y busca nuevas experiencias.",
+        "8w7":"Líder fuerte, dominante y seguro.",
+        "2w3":"Empático, sociable y orientado a ayudar.",
+        "6w5":"Leal, cauteloso y analítico.",
+        "9w1":"Pacífico, equilibrado y evita conflictos."
+    }
+
+    st.write(eneagrama_desc[eneagrama])
+
+    # ---------------- COMPATIBILIDAD ----------------
 
     usuario_vec = mbti_to_vec.get(mbti, [0,0,0,0])
-
     df["vector"] = df["mbti"].apply(lambda x: mbti_to_vec.get(x, [0,0,0,0]))
 
     df["compatibilidad"] = df["vector"].apply(
         lambda v: cosine_similarity(usuario_vec, v)
     ) * 100
-
-    # -------------------------------------------------
-    # RESULTADOS
-    # -------------------------------------------------
 
     st.subheader("Top celebridades compatibles")
 
@@ -197,4 +192,4 @@ if st.button("Ver resultado"):
 
         st.markdown("---")
 
-    st.info("Modelo combinado MBTI + Eneagrama (5w4, 3w2, etc.)")
+    st.info("Modelo MBTI + Eneagrama con interpretación psicológica")
