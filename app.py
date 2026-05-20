@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import requests
 
 st.set_page_config(
     page_title="Test de Compatibilidad de Personalidad",
@@ -11,28 +10,9 @@ st.set_page_config(
 
 st.title("Test de Compatibilidad de Personalidad")
 
-# ---------------- FUNCIÓN IMAGEN SEGURA ----------------
-
-def imagen_segura(url):
-    try:
-        if url is None or str(url).strip() == "":
-            return "https://via.placeholder.com/300"
-
-        r = requests.head(url, timeout=3)
-
-        if r.status_code == 200:
-            return url
-        else:
-            return "https://via.placeholder.com/300"
-
-    except:
-        return "https://via.placeholder.com/300"
-
-
 # ---------------- CSV ----------------
 
 df = pd.read_csv("celebridades_mbti.csv")
-df["imagen"] = df["imagen"].apply(imagen_segura)
 
 # ---------------- MBTI VECTOR ----------------
 
@@ -153,7 +133,13 @@ if st.button("Ver resultado"):
     mbti += "T" if T >= F else "F"
     mbti += "J" if J >= P else "P"
 
-    st.success(f"MBTI: {mbti}")
+    st.success(f"Tu MBTI es: {mbti}")
+
+    # ---------------- PERSONALIDAD ----------------
+
+    st.subheader("Tu personalidad")
+
+    st.info(mbti_desc[mbti])
 
     # ---------------- ENEAGRAMA ----------------
 
@@ -170,21 +156,9 @@ if st.button("Ver resultado"):
     else:
         eneagrama = "6w5"
 
-    st.info(f"Eneagrama: {eneagrama}")
+    st.write(f"Eneagrama: {eneagrama}")
 
-    eneagrama_desc = {
-        "5w4":"Observador, introspectivo y creativo.",
-        "5w6":"Analítico y lógico.",
-        "4w5":"Artístico y emocional.",
-        "7w6":"Optimista y energético.",
-        "8w7":"Líder fuerte.",
-        "2w3":"Empático y social.",
-        "6w5":"Leal y cauteloso."
-    }
-
-    st.write(eneagrama_desc[eneagrama])
-
-    # ---------------- VECTOR ----------------
+    # ---------------- VECTOR USUARIO ----------------
 
     user_vector = np.array([
         T > F,
@@ -214,13 +188,13 @@ if st.button("Ver resultado"):
 
     # ---------------- RESULTADOS ----------------
 
-    st.subheader("Top celebridades compatibles")
+    st.subheader("Top compatibilidad")
 
     top = df.sort_values("compatibilidad", ascending=False).head(5)
 
     for _, row in top.iterrows():
 
-        st.markdown(f"### {row['nombre']}")
+        st.markdown("---")
 
         col1, col2 = st.columns([1, 2])
 
@@ -228,12 +202,14 @@ if st.button("Ver resultado"):
             st.image(row["imagen"], use_container_width=True)
 
         with col2:
+            st.markdown(f"### {row['nombre']}")
             st.write(f"MBTI: {row['mbti']} | Eneagrama: {row['eneagrama']}")
             st.metric("Compatibilidad", f"{row['compatibilidad']:.1f}%")
 
+            # explicación del match
             st.caption(
-                f"Analítico={row['analitico']} | Social={row['social']} | Creativo={row['creativo']} | Líder={row['lider']}"
+                "Coincidencia basada en estructura de personalidad (MBTI + rasgos de comportamiento)"
             )
 
     st.markdown("---")
-    st.success("Modelo híbrido: MBTI + Eneagrama + categorías + similitud vectorial")
+    st.success("Modelo híbrido: MBTI + Eneagrama + análisis vectorial de personalidad")
