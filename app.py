@@ -15,7 +15,7 @@ st.set_page_config(
 st.title("Test de Compatibilidad de Personalidad")
 
 # -------------------------------------------------
-# CARGAR CSV
+# CARGA CSV
 # -------------------------------------------------
 
 df = pd.read_csv("celebridades_mbti.csv")
@@ -43,19 +43,70 @@ mbti_to_vec = {
     "ESFP":[0,1,0,1]
 }
 
+# -------------------------------------------------
+# COSINE SIMILARITY
+# -------------------------------------------------
+
 def cosine_similarity(a, b):
     a = np.array(a)
     b = np.array(b)
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 # -------------------------------------------------
-# PREGUNTAS
+# PREGUNTAS MBTI (16)
 # -------------------------------------------------
 
-q1 = st.radio("Prefieres:", ["Solo", "Con gente"])
-q2 = st.radio("Decides con:", ["Lógica", "Emoción"])
-q3 = st.radio("Estilo:", ["Planificado", "Espontáneo"])
-q4 = st.radio("Prefieres:", ["Ideas", "Hechos"])
+st.subheader("Cuestionario MBTI")
+
+q1 = st.radio("1. Prefieres:", ["Solo", "Con gente"])
+q2 = st.radio("2. Te recargas con:", ["Soledad", "Socializar"])
+q3 = st.radio("3. En eventos eres:", ["Observador", "Participativo"])
+q4 = st.radio("4. Prefieres trabajar:", ["Individual", "Equipo"])
+
+q5 = st.radio("5. Prefieres:", ["Hechos", "Ideas"])
+q6 = st.radio("6. Te enfocas en:", ["Presente", "Futuro"])
+q7 = st.radio("7. Confías en:", ["Experiencia", "Intuición"])
+q8 = st.radio("8. Aprendes mejor con:", ["Ejemplos", "Conceptos"])
+
+q9 = st.radio("9. Decides con:", ["Lógica", "Emoción"])
+q10 = st.radio("10. Valoras:", ["Justicia", "Empatía"])
+q11 = st.radio("11. Eres más:", ["Objetivo", "Comprensivo"])
+q12 = st.radio("12. En conflictos:", ["Analizas", "Sientes"])
+
+q13 = st.radio("13. Prefieres:", ["Planificar", "Improvisar"])
+q14 = st.radio("14. Estilo de vida:", ["Organizado", "Flexible"])
+q15 = st.radio("15. Trabajas mejor:", ["Con estructura", "Sin estructura"])
+q16 = st.radio("16. Prefieres terminar:", ["Antes", "Último momento"])
+
+# -------------------------------------------------
+# ENEAGRAMA
+# -------------------------------------------------
+
+st.subheader("Eneagrama")
+
+e1 = st.radio("¿Con cuál te identificas más?", [
+    "Perfeccionista",
+    "Ayudador",
+    "Exitoso",
+    "Creativo",
+    "Investigador",
+    "Leal",
+    "Entusiasta",
+    "Líder",
+    "Pacificador"
+])
+
+eneagrama_map = {
+    "Perfeccionista":"1w9",
+    "Ayudador":"2w3",
+    "Exitoso":"3w2",
+    "Creativo":"4w5",
+    "Investigador":"5w4",
+    "Leal":"6w5",
+    "Entusiasta":"7w6",
+    "Líder":"8w7",
+    "Pacificador":"9w1"
+}
 
 # -------------------------------------------------
 # RESULTADO
@@ -63,27 +114,64 @@ q4 = st.radio("Prefieres:", ["Ideas", "Hechos"])
 
 if st.button("Ver resultado"):
 
-    I = 1 if q1 == "Solo" else 0
-    E = 1 if q1 == "Con gente" else 0
+    I = E = N = S = T = F = J = P = 0
 
-    T = 1 if q2 == "Lógica" else 0
-    F = 1 if q2 == "Emoción" else 0
+    # E / I
+    if q1 == "Solo": I += 1
+    else: E += 1
+    if q2 == "Soledad": I += 1
+    else: E += 1
+    if q3 == "Observador": I += 1
+    else: E += 1
+    if q4 == "Individual": I += 1
+    else: E += 1
 
-    J = 1 if q3 == "Planificado" else 0
-    P = 1 if q3 == "Espontáneo" else 0
+    # S / N
+    if q5 == "Hechos": S += 1
+    else: N += 1
+    if q6 == "Presente": S += 1
+    else: N += 1
+    if q7 == "Experiencia": S += 1
+    else: N += 1
+    if q8 == "Ejemplos": S += 1
+    else: N += 1
 
-    N = 1 if q4 == "Ideas" else 0
-    S = 1 if q4 == "Hechos" else 0
+    # T / F
+    if q9 == "Lógica": T += 1
+    else: F += 1
+    if q10 == "Justicia": T += 1
+    else: F += 1
+    if q11 == "Objetivo": T += 1
+    else: F += 1
+    if q12 == "Analizas": T += 1
+    else: F += 1
 
-    resultado = ""
-    resultado += "I" if I >= E else "E"
-    resultado += "N" if N >= S else "S"
-    resultado += "T" if T >= F else "F"
-    resultado += "J" if J >= P else "P"
+    # J / P
+    if q13 == "Planificar": J += 1
+    else: P += 1
+    if q14 == "Organizado": J += 1
+    else: P += 1
+    if q15 == "Con estructura": J += 1
+    else: P += 1
+    if q16 == "Antes": J += 1
+    else: P += 1
 
-    st.success(f"Tu tipo MBTI es: {resultado}")
+    # MBTI final
+    mbti = ""
+    mbti += "I" if I >= E else "E"
+    mbti += "N" if N >= S else "S"
+    mbti += "T" if T >= F else "F"
+    mbti += "J" if J >= P else "P"
 
-    usuario_vec = mbti_to_vec.get(resultado, [0,0,0,0])
+    eneagrama = eneagrama_map[e1]
+
+    st.success(f"Tu tipo es: {mbti} | Eneagrama: {eneagrama}")
+
+    # -------------------------------------------------
+    # COMPATIBILIDAD
+    # -------------------------------------------------
+
+    usuario_vec = mbti_to_vec.get(mbti, [0,0,0,0])
 
     df["vector"] = df["mbti"].apply(lambda x: mbti_to_vec.get(x, [0,0,0,0]))
 
@@ -91,19 +179,22 @@ if st.button("Ver resultado"):
         lambda v: cosine_similarity(usuario_vec, v)
     ) * 100
 
-    top = df.sort_values("compatibilidad", ascending=False).head(5)
+    # -------------------------------------------------
+    # RESULTADOS
+    # -------------------------------------------------
 
     st.subheader("Top celebridades compatibles")
+
+    top = df.sort_values("compatibilidad", ascending=False).head(5)
 
     for _, row in top.iterrows():
 
         st.markdown(f"### {row['nombre']}")
+        st.write(f"MBTI: {row['mbti']} | Eneagrama: {row['eneagrama']}")
         st.write(f"{row['compatibilidad']:.1f}% compatibilidad")
 
-        # IMAGEN AUTOMÁTICA (sin CSV)
-        st.image(
-            f"https://source.unsplash.com/300x300/?{row['nombre']}",
-            width=150
-        )
+        st.image(row["imagen"], width=150)
 
         st.markdown("---")
+
+    st.info("Modelo combinado MBTI + Eneagrama (5w4, 3w2, etc.)")
